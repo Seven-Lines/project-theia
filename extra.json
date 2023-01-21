@@ -1,0 +1,11 @@
+{
+    "banner": "  _______ _          _       \n |__   __| |        (_)      \n    | |  | |__   ___ _  __ _ \n    | |  | '_ \\ / _ \\ |/ _` |\n    | |  | | | |  __/ | (_| |   Viewbotting software..\n    |_|  |_| |_|\\___|_|\\__,_|   v0.4;01-07-23\n",
+    "divider": "------------------------------------------------------------", 
+    "load": "|/-\\", 
+
+    "error": { 
+        "no_thread_pool": "No active thread pools to view. You should know\n   how your own shit works dumbass.", 
+        "command_unknown": "PROGRAM ERROR: You entered a wrong command or something\n   went horrribly wrong."
+    }
+
+}
