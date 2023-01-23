@@ -13,17 +13,17 @@ import random as r
 
 from classes.worker import TheiaWorker
 
-class ThreadPool: 
+class workerpool: 
     def __init__(self, id, mw, task): 
         self.id = id
         self.mw = mw
         self.task = task
 
-        self.threadpool = ThreadPoolExecutor(max_workers=mw) 
+        self.workerpool = ThreadPoolExecutor(max_workers=mw) 
         self.workers = [] 
 
         for worker_num in range(mw): 
-            w = TheiaWorker(self.threadpool, (worker_num + 1), None)
+            w = TheiaWorker(self.workerpool, (worker_num + 1), None)
             self.workers.append(w) 
 
     def __str__(self): 
@@ -39,10 +39,10 @@ class ThreadPool:
     def getMaxWorkers(self): 
         return(self.mw)
 
-    def getThreadPool(self):
-        return(self.threadpool) 
+    def getworkerpool(self):
+        return(self.workerpool) 
 
     def __del__(self):
         print(f"I am deleting {self.id}")
-        #self.threadpool.shutdown(wait=False)
+        #self.workerpool.shutdown(wait=False)
 
