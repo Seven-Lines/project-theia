@@ -60,25 +60,19 @@ def delete_threadpool():
     if len(active_threadpools) > 0:
         print("\n")
 
-
         options = {"0": ("GO BACK", menu)}
         for x in range(len(active_threadpools)):
-            options[x+1] = (active_threadpools[x], active_threadpools[x].__del__)
+            options[str(x+1)] = (active_threadpools[x], active_threadpools[x].__del__)
 
         for key in options: 
             print(f"[{key}] {options[key][0]}")
-        
         try: 
-            choice = options.get(input("\nMake your choice: "))
-            
-            print(choice)
-            
+            choice = options.get(str(input("Make your choice: ")))      
+            active_threadpools.remove(choice[0])
             choice[1]()
-            menu(True, EXTRAS["message"]["deleted_threadpool"].format(choice.getId()))
+            menu(True, EXTRAS["message"]["deleted_threadpool"].format(choice[0].getId()))
         except: 
-            menu(True, EXTRAS["error"]["failed_to_delete"])
-        
-        #menu(True, EXTRAS["message"]["deleted_threadpool"].format("test"))
+            menu(True, EXTRAS["error"]["failed_to_delete"])        
     else: 
         menu(True, EXTRAS["error"]["no_thread_pool"])
 
@@ -101,7 +95,6 @@ def menu(refresh, message):
                 "1": ("Process manager", process_manager),
                 "2": ("DELETE ThreadPool", delete_threadpool),                
                 "3": ("CREATE ThreadPool", create_threadpool)}
-    
     if refresh: 
         divider, banner = EXTRAS["divider"], EXTRAS['banner']
         os.system("clear")
