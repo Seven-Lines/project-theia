@@ -28,7 +28,7 @@ class ThreadPool:
 
     def __str__(self): 
         # Total - 60 
-        return((f"[Thread Pool {self.id}]: {self.task}").ljust(59, "-") + "|")
+        return(f"[Thread Pool {self.id}]: {self.task}")
 
     def getId(self): 
         return(self.id)
@@ -43,5 +43,6 @@ class ThreadPool:
         return(self.threadpool) 
 
     def __del__(self):
-        self.threadpool.shutdown(wait=False)
+        print(f"I am deleting {self.id}")
+        #self.threadpool.shutdown(wait=False)
 

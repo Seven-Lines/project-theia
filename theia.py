@@ -37,7 +37,8 @@ def process_manager():
                 total_workers += 1 
         
         print("\n"*(len(active_threadpools) + total_workers + 2))
-        while True: 
+        process = True 
+        while process: 
             try: 
                 time.sleep(0.3)
                 print(f"{UP}"*(len(active_threadpools)+total_workers+3))
@@ -47,7 +48,9 @@ def process_manager():
                         print(worker)
                 print('\nPress \"CTRl+C\" to exit')
             except KeyboardInterrupt: 
-                menu(True, "")
+                process = False
+                menu(True, "We done with that shit")
+
     else: 
         menu(True, EXTRAS["error"]["no_thread_pool"]) 
 
@@ -55,11 +58,27 @@ def process_manager():
 # [2] REMOVE BOTS 
 def delete_threadpool(): 
     if len(active_threadpools) > 0:
-        print("\nD")
+        print("\n")
+
+
+        options = {"0": ("GO BACK", menu)}
         for x in range(len(active_threadpools)):
-            print(f"[{str(x)}] {active_threadpools[x].getId()}")
-        time.sleep(5)
-          
+            options[x+1] = (active_threadpools[x], active_threadpools[x].__del__)
+
+        for key in options: 
+            print(f"[{key}] {options[key][0]}")
+        
+        try: 
+            choice = options.get(input("\nMake your choice: "))
+            
+            print(choice)
+            
+            choice[1]()
+            menu(True, EXTRAS["message"]["deleted_threadpool"].format(choice.getId()))
+        except: 
+            menu(True, EXTRAS["error"]["failed_to_delete"])
+        
+        #menu(True, EXTRAS["message"]["deleted_threadpool"].format("test"))
     else: 
         menu(True, EXTRAS["error"]["no_thread_pool"])
 
@@ -77,21 +96,24 @@ def create_threadpool():
 
 
 #------------------------------| MAIN 
-menu_options = {"0": ("Exit", close_program),
+def menu(refresh, message):
+    menu_options = {"0": ("Exit", close_program),
                 "1": ("Process manager", process_manager),
                 "2": ("DELETE ThreadPool", delete_threadpool),                
                 "3": ("CREATE ThreadPool", create_threadpool)}
-def menu(refresh, message):
+    
     if refresh: 
         divider, banner = EXTRAS["divider"], EXTRAS['banner']
         os.system("clear")
         print(f"{divider}\n{banner}{divider}\n >",colored(message, 'red')) 
-    mo = menu_options
-    for key in mo: print(f"[{key}] {mo[key][0]}")
+    for key in menu_options: print(f"[{key}] {menu_options[key][0]}")
     
     try: 
         menu_options.get(input("Make your choice: "))[1]()
     except: 
-        menu(True, EXTRAS["error"]["command_unknown"]) 
+        if message != None: 
+            menu(True, message)
+        else: 
+            menu(True, EXTRAS["error"]["command_unknown"]) 
 
 menu(True, "")
