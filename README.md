@@ -1,2 +1,2 @@
-# project-theia
-personal viewbotting software
+# Theia
+Personal botting software.
