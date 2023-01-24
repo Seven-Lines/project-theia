@@ -1,4 +1,4 @@
-# Project Theia v0.4.5, 01/24/23 
+# Project Theia v0.4.5, 01/24/23
 #------------------------------| IMPORTS / CONFIGURATIONS
 import json, time, sys, os, random
 from threading import Thread
@@ -16,16 +16,18 @@ active_workerpools = []
 UP = "\x1B[1A" #up 1 
 CLR = "\x1B[0K" #clear 
 
+version = "v0.5.0; 1/24/23"
+
 #------------------------------| MENU FUNCTIONS 
-# [0] CLOSE PROGRAM 
-# Just closes the program. 
+# [0] "EXIT"
+# Closes program. 
 def close_program(): 
     print("\nExiting... \n")
     os._exit(0)
 
 
-# [1] PROCESS MANAGER 
-# Shows threads and shit 
+# [1] "PROCESS MANAGER" 
+# Shows threads and shit. 
 def process_manager(): 
     if len(active_workerpools) > 0:
         total_workers = 0 
@@ -52,7 +54,8 @@ def process_manager():
         menu(True, extr["error"]["no_thread_pool"]) 
 
 
-# [2] REMOVE BOTS 
+# [2] "DELETE WORKERPOOL" 
+# Deletes workerpool.
 def delete_workerpool(): 
     if len(active_workerpools) > 0:
         print("\n")
@@ -74,8 +77,8 @@ def delete_workerpool():
         menu(True, extr["error"]["no_thread_pool"])
 
 
-# [3] MAKE BOTS 
-# Makes bots
+# [3] "CREATE WORKERPOOL" 
+# Creates pool of workers.
 def create_workerpool(): 
     user_worker_input = int(input("Number of workers (threads): "))
     
@@ -93,7 +96,7 @@ def menu(refresh, message):
                 "2": ("DELETE workerpool", delete_workerpool),                
                 "3": ("CREATE workerpool", create_workerpool)}
     if refresh: 
-        divider, banner = extr["divider"], extr['banner']
+        divider, banner = extr["divider"], extr['banner'].format(version)
         os.system("clear")
         print(f"{divider}\n{banner}{divider}\n >",colored(message, 'red')) 
     for key in menu_options: print(f"[{key}] {menu_options[key][0]}")
