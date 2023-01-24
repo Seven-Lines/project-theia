@@ -8,6 +8,6 @@
         "failed_to_delete": "Failed to delete threadpool. It either doesn't\n   Exist or you're a tard and fucked up the code."
     }, 
     "message": { 
-        "deleted_threadpool": "Deleted threadpool {}"
+        "deleted_workerpool": "Deleted workerpool {}"
     }
 }
