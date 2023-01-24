@@ -1,4 +1,4 @@
-# Project Theia v0.4.3, 01/07/23 
+# Project Theia v0.4.4, 01/23/23 
 #------------------------------| IMPORTS / CONFIGURATIONS
 import json, time, sys, os, random
 from threading import Thread
