@@ -1,4 +1,4 @@
 # Project Theia v?.?.?
-~this shit changes too much to repeatedly update the version nubmer at this time~
+H~2~O
 ---
 personal viewbotting software
