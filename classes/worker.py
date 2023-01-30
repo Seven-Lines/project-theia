@@ -3,7 +3,6 @@ This is what defines the individual behavior of each
 of the workers that inhabit the threadpool.
 """
 import random 
-from termcolor import colored  
 
 class TheiaWorker: 
     def __init__(self, threadpool, id_num, status):

@@ -19,11 +19,11 @@ class workerpool:
         self.mw = mw
         self.task = task
 
-        self.workerpool = ThreadPoolExecutor(max_workers=mw) 
+        self.executor = ThreadPoolExecutor(max_workers=mw) 
         self.workers = [] 
 
         for worker_num in range(mw): 
-            w = TheiaWorker(self.workerpool, (worker_num + 1), None)
+            w = TheiaWorker(self.executor, (worker_num + 1), None)
             self.workers.append(w) 
 
     def __str__(self): 
@@ -40,9 +40,8 @@ class workerpool:
         return(self.mw)
 
     def getworkerpool(self):
-        return(self.workerpool) 
+        return(self.executor) 
 
     def __del__(self):
         print(f"I am deleting {self.id}")
         #self.workerpool.shutdown(wait=False)
-

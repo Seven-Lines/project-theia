@@ -4,6 +4,7 @@ import json, time, sys, os, random
 from threading import Thread
 from termcolor import colored  
 from selenium import webdriver 
+import functools
 
 from classes.worker import TheiaWorker
 from classes.workerpool import workerpool
@@ -30,21 +31,14 @@ def close_program():
 # Shows threads and shit. 
 def process_manager(): 
     if len(active_workerpools) > 0:
-        total_workers = 0 
-        for wp in active_workerpools: 
-            for worker in wp.getWorkers(): 
-                total_workers += 1 
-        
+        total_workers = sum(len(w.getWorkers()) for w in active_workerpools)
         print("\n"*(len(active_workerpools) + total_workers + 2))
         process = True 
         while process: 
             try: 
                 time.sleep(0.3)
-                print(f"{UP}"*(len(active_workerpools)+total_workers+3))
-                for workerpool in active_workerpools: 
-                    print(workerpool)
-                    for w in workerpool.getWorkers(): 
-                        print(w)
+                print(f"{UP}"*(len(active_workerpools) + total_workers + 3))
+                for wp in active_workerpools: print(wp); [print(w) for w in wp.getWorkers()]
                 print('\nPress \"CTRl+C\" to exit')
             except KeyboardInterrupt: 
                 process = False
@@ -80,11 +74,15 @@ def delete_workerpool():
 # [3] "CREATE WORKERPOOL" 
 # Creates pool of workers.
 def create_workerpool(): 
+    options = {"0": ("Idk") 
+               }
     user_worker_input = int(input("Number of workers (threads): "))
     
+    #def workerpool_processer(task):
+
     print("\nCreating workerpool for bots...")
     workerpool_index = f"bot_maker_{len(active_workerpools)}" 
-    active_workerpools.append(workerpool(workerpool_index, user_worker_input, "(YT) Account creation"))
+    active_workerpools.append(workerpool(workerpool_index, user_worker_input, "NULL task"))
  
     menu(True, (f"Created bot {workerpool_index}"))
 
