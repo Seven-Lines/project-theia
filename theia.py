@@ -1,4 +1,4 @@
-# Project Theia v0.4.5, 01/24/23
+# Project Theia
 #------------------------------| IMPORTS / CONFIGURATIONS
 import json, time, sys, os, random
 from termcolor import colored  
@@ -12,7 +12,7 @@ active_workerpools = []
 UP = "\x1B[1A" #up 1 
 CLR = "\x1B[0K" #clear 
 
-version = "v0.5.0; 1/24/23"
+version = "v0.5.1; 1/31/23"
 
 #------------------------------| MENU FUNCTIONS 
 # [0] "EXIT"
