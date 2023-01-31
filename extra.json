@@ -5,7 +5,7 @@
     "error": { 
         "no_thread_pool": "No active thread pools to view. You should know\n   how your own shit works dumbass.", 
         "command_unknown": "PROGRAM ERROR: You entered a wrong command or something\n   went horrribly wrong.",
-        "failed_to_delete": "Failed to delete threadpool. It either doesn't\n   Exist or you're a tard and fucked up the code."
+        "failed_to_delete": "Failed to delete threadpool. It either doesn't\n   exist or you hit [0]."
     }, 
     "message": { 
         "deleted_workerpool": "Deleted workerpool {}"

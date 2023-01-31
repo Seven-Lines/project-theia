@@ -42,29 +42,7 @@ def process_manager():
     else: 
         menu(True, extr["error"]["no_thread_pool"]) 
 
-
-# [2] "DELETE WORKERPOOL" 
-# Deletes workerpool.
-def delete_workerpool(): 
-    if len(active_workerpools) > 0:
-        print("\n")
-
-        options = {"0": ("GO BACK")}
-        for x in range(len(active_workerpools)):
-            options[str(x+1)] = (active_workerpools[x], active_workerpools[x].__del__)        
-        [print(f"[{key}] {options[key][0]}") for key in options]
-        try: 
-            choice = options.get(str(input("Make your choice: ")))      
-            active_workerpools.remove(choice[0])
-            choice[1]()
-            menu(True, extr["message"]["deleted_workerpool"].format(choice[0].getId()))
-        except: 
-            menu(True, extr["error"]["failed_to_delete"])        
-    else: 
-        menu(True, extr["error"]["no_thread_pool"])
-
-
-# [3] "CREATE WORKERPOOL" 
+# [2] "CREATE WORKERPOOL" 
 # Creates pool of workers.
 def create_workerpool(): 
     options = {"0": ("Idk")}
@@ -79,12 +57,32 @@ def create_workerpool():
     menu(True, (f"Created bot {workerpool_index}"))
 
 
+# [3] "DELETE WORKERPOOL" 
+# Deletes workerpool.
+def delete_workerpool(): 
+    if len(active_workerpools) > 0:
+        print("\n")
+
+        options = {"0": "GO BACK"}
+        [options.update({str(wp[0]+1): wp[1]}) for wp in enumerate(active_workerpools)]
+        [print(f"[{key}] {options[key]}") for key in options]
+        try: 
+            choice = options.get(str(input("Make your choice: ")))      
+            active_workerpools.remove(choice)
+            choice.__del__()
+            menu(True, extr["message"]["deleted_workerpool"].format(choice.getId()))
+        except: 
+            menu(True, extr["error"]["failed_to_delete"])        
+    else: 
+        menu(True, extr["error"]["no_thread_pool"])
+
+
 #------------------------------| MAIN 
 def menu(refresh, message):
     menu_options = {"0": ("Exit", close_program),
                 "1": ("Process manager", process_manager),
-                "2": ("DELETE workerpool", delete_workerpool),                
-                "3": ("CREATE workerpool", create_workerpool)}
+                "2": ("CREATE workerpool", create_workerpool),                
+                "3": ("DELETE workerpool", delete_workerpool)}
     if refresh: 
         divider, banner = extr["divider"], extr['banner'].format(version)
         os.system("clear")
