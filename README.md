@@ -1,2 +1,2 @@
 # Theia
-Personal botting software.
+Personal "view"botting software
