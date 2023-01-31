@@ -8,6 +8,9 @@
         "failed_to_delete": "Failed to delete threadpool. It either doesn't\n   exist or you hit [0]."
     }, 
     "message": { 
-        "deleted_workerpool": "Deleted workerpool {}"
+        "deleted_workerpool": "Deleted workerpool {}",
+        "didnt_delete_workerpool": "No workpools deleted.", 
+        "created_workerpool": "Successfully created workerpool.", 
+        "didnt_create_workerpool": "No workerpools created."
     }
 }

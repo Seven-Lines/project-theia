@@ -1,6 +1,6 @@
 # Project Theia
 #------------------------------| IMPORTS / CONFIGURATIONS
-import json, time, sys, os, random
+import json, time, sys, os, random, string
 from termcolor import colored  
 from classes.workerpool import workerpool
 
@@ -45,37 +45,38 @@ def process_manager():
 # [2] "CREATE WORKERPOOL" 
 # Creates pool of workers.
 def create_workerpool(): 
-    options = {"0": ("Idk")}
-    user_worker_input = int(input("Number of workers (threads): "))
-    
-    #def workerpool_processer(task):
-
-    print("\nCreating workerpool for bots...")
-    workerpool_index = f"bot_maker_{len(active_workerpools)}" 
-    active_workerpools.append(workerpool(workerpool_index, user_worker_input, "NULL task"))
- 
-    menu(True, (f"Created bot {workerpool_index}"))
+    options = {"0": "GO BACK", 
+               "1": "Threading Test"}
+    print("\nCreate workerpool..."); [print(f"[{key}] {options[key]}") for key in options]
+    match str(input("Make your choice: ")): 
+        case "0": 
+            menu(True, extr["message"]["didnt_create_workerpool"])    
+        case "1":
+            active_workerpools.append(workerpool(
+                random.choice(string.ascii_letters).upper() + str(random.randint(0, 9)), 
+                int(input("How many: ")), 
+                "Testing threading"
+            )) 
+            menu(True, extr["message"]["created_workerpool"])
 
 
 # [3] "DELETE WORKERPOOL" 
 # Deletes workerpool.
 def delete_workerpool(): 
     if len(active_workerpools) > 0:
-        print("\n")
-
         options = {"0": "GO BACK"}
         [options.update({str(wp[0]+1): wp[1]}) for wp in enumerate(active_workerpools)]
-        [print(f"[{key}] {options[key]}") for key in options]
+        print("\n"); [print(f"[{key}] {options[key]}") for key in options]
         try: 
             choice = options.get(str(input("Make your choice: ")))      
             active_workerpools.remove(choice)
             choice.__del__()
             menu(True, extr["message"]["deleted_workerpool"].format(choice.getId()))
         except: 
-            menu(True, extr["error"]["failed_to_delete"])        
+            menu(True, extr["message"]["didnt_delete_workerpool"])        
     else: 
         menu(True, extr["error"]["no_thread_pool"])
-
+print()
 
 #------------------------------| MAIN 
 def menu(refresh, message):

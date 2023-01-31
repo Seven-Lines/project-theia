@@ -11,7 +11,6 @@ class TheiaWorker:
         self.status = status 
     
     def __str__(self): 
-        self.setRandomStatus()
         return((f"  ↳ Worker {self.id_num}").ljust(30, ".") + 
             (f"{self.status}").rjust(29, ".") + " ")
 
