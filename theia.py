@@ -1,12 +1,7 @@
 # Project Theia v0.4.5, 01/24/23
 #------------------------------| IMPORTS / CONFIGURATIONS
 import json, time, sys, os, random
-from threading import Thread
 from termcolor import colored  
-from selenium import webdriver 
-import functools
-
-from classes.worker import TheiaWorker
 from classes.workerpool import workerpool
 
 extr = json.load(open('extra.json'))
@@ -42,7 +37,7 @@ def process_manager():
                 print('\nPress \"CTRl+C\" to exit')
             except KeyboardInterrupt: 
                 process = False
-                menu(True, "We done with that shit")
+                menu(True, "")
 
     else: 
         menu(True, extr["error"]["no_thread_pool"]) 
@@ -54,12 +49,10 @@ def delete_workerpool():
     if len(active_workerpools) > 0:
         print("\n")
 
-        options = {"0": ("GO BACK", menu)}
+        options = {"0": ("GO BACK")}
         for x in range(len(active_workerpools)):
-            options[str(x+1)] = (active_workerpools[x], active_workerpools[x].__del__)
-
-        for key in options: 
-            print(f"[{key}] {options[key][0]}")
+            options[str(x+1)] = (active_workerpools[x], active_workerpools[x].__del__)        
+        [print(f"[{key}] {options[key][0]}") for key in options]
         try: 
             choice = options.get(str(input("Make your choice: ")))      
             active_workerpools.remove(choice[0])
@@ -74,8 +67,7 @@ def delete_workerpool():
 # [3] "CREATE WORKERPOOL" 
 # Creates pool of workers.
 def create_workerpool(): 
-    options = {"0": ("Idk") 
-               }
+    options = {"0": ("Idk")}
     user_worker_input = int(input("Number of workers (threads): "))
     
     #def workerpool_processer(task):
@@ -97,7 +89,7 @@ def menu(refresh, message):
         divider, banner = extr["divider"], extr['banner'].format(version)
         os.system("clear")
         print(f"{divider}\n{banner}{divider}\n >",colored(message, 'red')) 
-    for key in menu_options: print(f"[{key}] {menu_options[key][0]}")
+    [print(f"[{key}] {menu_options[key][0]}") for key in menu_options] 
     
     try: 
         menu_options.get(input("Make your choice: "))[1]()
