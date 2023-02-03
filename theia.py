@@ -42,6 +42,7 @@ def process_manager():
     else: 
         menu(True, extr["error"]["no_thread_pool"]) 
 
+
 # [2] "CREATE WORKERPOOL" 
 # Creates pool of workers.
 def create_workerpool(): 
@@ -76,7 +77,6 @@ def delete_workerpool():
             menu(True, extr["message"]["didnt_delete_workerpool"])        
     else: 
         menu(True, extr["error"]["no_thread_pool"])
-print()
 
 #------------------------------| MAIN 
 def menu(refresh, message):
@@ -86,7 +86,7 @@ def menu(refresh, message):
                 "3": ("DELETE workerpool", delete_workerpool)}
     if refresh: 
         divider, banner = extr["divider"], extr['banner'].format(version)
-        os.system("clear")
+        os.system("clear")   #for unix, "cls" for windows
         print(f"{divider}\n{banner}{divider}\n >",colored(message, 'red')) 
     [print(f"[{key}] {menu_options[key][0]}") for key in menu_options] 
     
