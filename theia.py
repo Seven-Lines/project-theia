@@ -38,7 +38,6 @@ def process_manager():
             except KeyboardInterrupt: 
                 process = False
                 menu(True, "")
-
     else: 
         menu(True, extr["error"]["no_thread_pool"]) 
 
@@ -77,6 +76,7 @@ def delete_workerpool():
             menu(True, extr["message"]["didnt_delete_workerpool"])        
     else: 
         menu(True, extr["error"]["no_thread_pool"])
+
 
 #------------------------------| MAIN 
 def menu(refresh, message):
