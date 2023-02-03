@@ -1,6 +1,6 @@
 # Project Theia
 #------------------------------| IMPORTS / CONFIGURATIONS
-import json, time, sys, os, random, string
+import json, time, sys, os, random, string, platform 
 from termcolor import colored  
 from classes.workerpool import workerpool
 
@@ -13,6 +13,7 @@ UP = "\x1B[1A" #up 1
 CLR = "\x1B[0K" #clear 
 
 version = "v0.5.1; 1/31/23"
+clear_command = "clear" if platform.system() == 'Linux' else 'cls'
 
 #------------------------------| MENU FUNCTIONS 
 # [0] "EXIT"
@@ -86,7 +87,7 @@ def menu(refresh, message):
                 "3": ("DELETE workerpool", delete_workerpool)}
     if refresh: 
         divider, banner = extr["divider"], extr['banner'].format(version)
-        os.system("clear")   #for unix, "cls" for windows
+        os.system(clear_command)  
         print(f"{divider}\n{banner}{divider}\n >",colored(message, 'red')) 
     [print(f"[{key}] {menu_options[key][0]}") for key in menu_options] 
     
