@@ -4,8 +4,6 @@ while keeping the program running at all times. This feature allows
 me to focus the efforts of the bots, even as the program runs 24/7. 
 On a whim I can change the focus of the bots from reconnaissance to 
 targeting one of my videos. 
-
-In theory I should be able to create multiple thread pools. 
 """
 from concurrent.futures import ThreadPoolExecutor
 from termcolor import colored  

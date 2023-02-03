@@ -49,16 +49,16 @@ def create_workerpool():
     options = {"0": "GO BACK", 
                "1": "Threading Test"}
     print("\nCreate workerpool..."); [print(f"[{key}] {options[key]}") for key in options]
-    match str(input("Make your choice: ")): 
-        case "0": 
-            menu(True, extr["message"]["didnt_create_workerpool"])    
-        case "1":
-            active_workerpools.append(workerpool(
-                random.choice(string.ascii_letters).upper() + str(random.randint(0, 9)), 
-                int(input("How many: ")), 
-                "Testing threading"
-            )) 
-            menu(True, extr["message"]["created_workerpool"])
+    user_choice = str(input("Make your choice: ")) 
+    if user_choice == "0": 
+        menu(True, extr["message"]["didnt_create_workerpool"])    
+    else: 
+        active_workerpools.append(workerpool(
+            random.choice(string.ascii_letters).upper() + str(random.randint(0, 9)), 
+            int(input("How many: ")), 
+            str(user_choice)
+        )) 
+        menu(True, extr["message"]["created_workerpool"])
 
 
 # [3] "DELETE WORKERPOOL" 
