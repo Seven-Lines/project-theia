@@ -12,15 +12,15 @@ import random as r
 from classes.worker import TheiaWorker
 
 class workerpool: 
-    def __init__(self, id, mw, task): 
+    def __init__(self, id, task, mw): 
         self.id = id
-        self.mw = mw
-        self.task = task
-
         self.executor = ThreadPoolExecutor(max_workers=mw) 
-        self.workers = [] 
+        self.workers = []; [self.workers.append(TheiaWorker(self.executor, (num+1), "")) for num in range(mw)]  
+        match task: 
+            case "1": # TESTING THREADING
+                self.task = "Test\Threading"
+                
 
-        [self.workers.append(TheiaWorker(self.executor, (num+1), "")) for num in range(mw)]  
 
     #def functionality...
 
@@ -32,5 +32,4 @@ class workerpool:
 
     def getId(self): return(self.id)
     def getWorkers(self): return(self.workers)
-    def getMaxWorkers(self): return(self.mw)
     def getworkerpool(self): return(self.executor) 
