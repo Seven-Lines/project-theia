@@ -53,8 +53,8 @@ def create_workerpool():
     try: 
         active_workerpools.append(workerpool(
             random.choice(string.ascii_letters).upper() + str(random.randint(0, 9)), 
-            str(str(input("Make your choice: "))),
-            int(input("How many: "))
+            str(str(input(" >> "))),
+            int(input(" >>(How many): "))
         )) 
         menu(True, extr["message"]["created_workerpool"])
     except: 
@@ -92,7 +92,7 @@ def menu(refresh, message):
     [print(f"[{key}] {menu_options[key][0]}") for key in menu_options] 
     
     try: 
-        menu_options.get(input("Make your choice: "))[1]()
+        menu_options.get(input("Select option: "))[1]()
     except: 
         if message != None: 
             menu(True, message)
