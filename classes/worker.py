@@ -25,7 +25,8 @@ def test_function(worker):
         "Finding victim", 
         "Logging into account"
     ]
+
     while True: 
-        time.sleep(0.1)
+        time.sleep(random.randint(0, 2))
         worker.status = test_status[random.randint(0, 2)]
-        break
+   

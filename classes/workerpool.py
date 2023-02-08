@@ -20,8 +20,7 @@ class workerpool:
         match task: 
             case "1": # TESTING THREADING
                 self.task = "Test\Threading"
-                with self.executor as executor:
-                    executor.map(test_function, self.workers) # function, workers 
+                self.executor.map(test_function, self.workers) 
                 
     def __str__(self): 
         return(f"[WorkerPool {self.id} - {self.task}]")
