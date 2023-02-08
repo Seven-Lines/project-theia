@@ -12,7 +12,7 @@ active_workerpools = []
 UP = "\x1B[1A" #up 1 
 CLR = "\x1B[0K" #clear 
 
-version = "v0.5.1; 1/31/23"
+version = "v0.6.0; 02/07/23"
 clear_command = "clear" if platform.system() == 'Linux' else 'cls'
 
 #------------------------------| MENU FUNCTIONS 
