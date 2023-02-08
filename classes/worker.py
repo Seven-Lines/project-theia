@@ -3,6 +3,12 @@ This is what defines the individual behavior of each
 of the workers that inhabit the threadpool.
 """
 import random, time 
+from selenium.webdriver import Chrome, ChromeOptions
+from selenium.webdriver.chrome.service import Service
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+webdriver_executable = '~/Documents/GitHub/project-theia/WebDrivers/chromedriver.exe'
 
 class TheiaWorker: 
     def __init__(self, threadpool, id_num, status):
@@ -19,7 +25,8 @@ class TheiaWorker:
 These are the functions that the workers 
 actually inact. Idk, I'm fat and retarded bro.
 """
-def test_function(worker):
+#------------------------------| TEST/THREADING  
+def test_threading(worker):
     test_status = [ 
         "Getting selenium", 
         "Finding victim", 
@@ -27,6 +34,21 @@ def test_function(worker):
     ]
 
     while True: 
-        time.sleep(random.randint(0, 2))
         worker.status = test_status[random.randint(0, 2)]
-   
+        time.sleep(random.randint(0, 2))
+    
+#------------------------------| SELENIUM/TESTING
+def test_selenium(worker): 
+    worker.status = "Configuring selenium"
+    options = ChromeOptions()
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    #options.headless = True 
+    #options.add_argument('--proxy-server=%s' %proxy)
+    options.add_argument('--window-size=640,480')
+
+    try: 
+        driver = webdriver.Chrome(service=Service(webdriver_executable), options=options)
+        driver.get("https://www.google.com/webhp?hl=en&ictx=2&sa=X&ved=0ahUKEwjt7qadq4b9AhXCgoQIHWhVA5EQPQgK")
+    except: 
+        worker.status = "BROKEN"     
