@@ -69,7 +69,7 @@ def delete_workerpool():
         [options.update({str(wp[0]+1): wp[1]}) for wp in enumerate(active_workerpools)]
         print("\n"); [print(f"[{key}] {options[key]}") for key in options]
         try: 
-            choice = options.get(str(input("Make your choice: ")))      
+            choice = options.get(str(input(" >> ")))      
             active_workerpools.remove(choice)
             choice.__del__()
             menu(True, extr["message"]["deleted_workerpool"].format(choice.getId()))
