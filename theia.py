@@ -48,8 +48,8 @@ def process_manager():
 def create_workerpool(): 
     options = {"0": "GO BACK", 
                "1": "Threading test", 
-               "2": "Test browser", 
-               "3": "Create bots"}
+               "2": "Test browser (1 wrk/thr)", 
+               "3": "Make bots (1 wrk/thr)"}
     print("\nCreate workerpool..."); [print(f"[{key}] {options[key]}") for key in options]
     try: 
         active_workerpools.append(workerpool(

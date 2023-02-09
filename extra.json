@@ -1,7 +1,6 @@
 {
     "banner": "  _______ _          _       \n |__   __| |        (_)      \n    | |  | |__   ___ _  __ _ \n    | |  | '_ \\ / _ \\ |/ _` |\n    | |  | | | |  __/ | (_| |   ViewBOOSTing software\n    |_|  |_| |_|\\___|_|\\__,_|   {}\n",
     "divider": "------------------------------------------------------------", 
-    "load": "|/-\\", 
     "error": { 
         "no_thread_pool": "No active thread pools to view. You should know\n   how your own shit works dumbass.", 
         "command_unknown": "PROGRAM ERROR: You entered a wrong command or something\n   went horrribly wrong.",
@@ -12,5 +11,13 @@
         "didnt_delete_workerpool": "No workpools deleted.", 
         "created_workerpool": "Successfully created workerpool.", 
         "didnt_create_workerpool": "No workerpools created."
+    }, 
+    "links": { 
+        "google": "https://www.google.com/webhp?hl=en&ictx=2&sa=X&ved=0ahUKEwjt7qadq4b9AhXCgoQIHWhVA5EQPQgK",
+        "guerillamail": "https://www.guerrillamail.com/", 
+        "protonmail": { 
+            "signup": "https://account.proton.me/signup?plan=free&billing=12&ref=prctbl&minimumCycle=12&currency=USD&product=mail&language=en",
+            "inbox": "null"
+        }
     }
 }

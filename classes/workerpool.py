@@ -24,12 +24,12 @@ class workerpool:
             case "2": # TESTING SELENIUM 
                 self.task = "Test\Selenium"
                 self.executor.map(test_selenium, self.workers)
-            case "3": 
+            case "3": # MAKING BOTS 
                 self.task = "Making\Bots"
                 self.executor.map(make_bots, self.workers)
                 
     def __str__(self): 
-        return(f"[WorkerPool {self.id} - {self.task}]")
+        return(f"[WorkerPool \"{self.id}\" - {self.task}]")
     def __del__(self):
         print(f"I am deleting {self.id}")
         #self.workerpool.shutdown(wait=False)

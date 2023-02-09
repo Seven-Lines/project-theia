@@ -2,13 +2,16 @@
 This is what defines the individual behavior of each 
 of the workers that inhabit the threadpool.
 """
-import random, time 
+import random, time, json
+
+from termcolor import colored  
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 webdriver_executable = '~/Documents/GitHub/project-theia/WebDrivers/chromedriver.exe'
+extr = json.load(open('extra.json'))
 
 class TheiaWorker: 
     def __init__(self, threadpool, id_num, status):
@@ -25,6 +28,8 @@ class TheiaWorker:
 These are the functions that the workers 
 actually inact. Idk, I'm fat and retarded bro.
 """
+success = "\033[92mSUCCESS\033[0m"
+failure = "\033[91mFAILURE\033[0m"
 #------------------------------| TEST/THREADING  
 def test_threading(worker):
     test_status = [ 
@@ -45,7 +50,7 @@ def test_selenium(worker):
     options = ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    #options.headless = True 
+    options.headless = True 
     #options.add_argument('--proxy-server=%s' %proxy)
     options.add_argument('--window-size=640,480')
 
@@ -53,27 +58,35 @@ def test_selenium(worker):
 
     try: 
         driver = webdriver.Chrome(service=Service(webdriver_executable), options=options)
-        driver.get("https://www.google.com/webhp?hl=en&ictx=2&sa=X&ved=0ahUKEwjt7qadq4b9AhXCgoQIHWhVA5EQPQgK")
+        driver.get(extr["links"]["google"])
     except: 
-        worker.status = "BROKEN" 
+        worker.status = failure 
         time.sleep(3)
 
+    #worker.status = extr["message"]["success"]
+    worker.status = success
 
 #------------------------------| MAKE BOTS
 def make_bots(worker):
-    worker.status = "Configuring selenium"
+    try: 
+        worker.status = "Configuring selenium"
 
-    options = ChromeOptions()
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    #options.headless = True
-    #options.add_argument('--proxy-server=%s' %proxy)
-    options.add_argument('--window-size=640,480')
+        options = ChromeOptions()
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option("excludeSwitches", ["enable-logging"])
+        #options.headless = True
+        #options.add_argument('--proxy-server=%s' %proxy)
+        options.add_argument('--window-size=640,480')
 
-    worker.status = "Creating random variables"
+        worker.status = "Opening GuerrillaMail"
 
-    username = "username"
-    password = "password"
+        driver = webdriver.Chrome(service=Service(webdriver_executable), options=options)
+        driver.get(extr["link"]["guerillamail"])
 
-    
+        worker.status = "Opening ProtonMail Sign Up"
+        driver.execute_script("window.open('about:blank', 'secondtab');")
+
+        time.sleep(5)
+    except: 
+        worker.status = failure
 
