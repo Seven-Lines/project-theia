@@ -68,23 +68,25 @@ def test_selenium(worker):
 
 #------------------------------| MAKE BOTS
 def make_bots(worker):
+    worker.status = "Configuring selenium"
+
+    options = ChromeOptions()
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    #options.headless = True
+    #options.add_argument('--proxy-server=%s' %proxy)
+    options.add_argument('--window-size=640,480')
+
     try: 
-        worker.status = "Configuring selenium"
-
-        options = ChromeOptions()
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_experimental_option("excludeSwitches", ["enable-logging"])
-        #options.headless = True
-        #options.add_argument('--proxy-server=%s' %proxy)
-        options.add_argument('--window-size=640,480')
-
         worker.status = "Opening GuerrillaMail"
 
         driver = webdriver.Chrome(service=Service(webdriver_executable), options=options)
-        driver.get(extr["link"]["guerillamail"])
+        driver.get(extr["links"]["guerrillamail"])
 
         worker.status = "Opening ProtonMail Sign Up"
-        driver.execute_script("window.open('about:blank', 'secondtab');")
+        driver.execute_script("window.open('{}', 'secondtab');".format(extr["links"]["protonmail"]["signup"]))
+
+        
 
         time.sleep(5)
     except: 

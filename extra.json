@@ -14,7 +14,7 @@
     }, 
     "links": { 
         "google": "https://www.google.com/webhp?hl=en&ictx=2&sa=X&ved=0ahUKEwjt7qadq4b9AhXCgoQIHWhVA5EQPQgK",
-        "guerillamail": "https://www.guerrillamail.com/", 
+        "guerrillamail": "https://www.guerrillamail.com/", 
         "protonmail": { 
             "signup": "https://account.proton.me/signup?plan=free&billing=12&ref=prctbl&minimumCycle=12&currency=USD&product=mail&language=en",
             "inbox": "null"
