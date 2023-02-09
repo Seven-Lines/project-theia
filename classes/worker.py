@@ -2,7 +2,7 @@
 This is what defines the individual behavior of each 
 of the workers that inhabit the threadpool.
 """
-import random, time, json
+import random, time, json, string
 
 from termcolor import colored  
 from selenium.webdriver import Chrome, ChromeOptions
@@ -46,7 +46,6 @@ def test_threading(worker):
 #------------------------------| TEST/SELENIUM
 def test_selenium(worker): 
     worker.status = "Configuring selenium"
-
     options = ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
@@ -55,7 +54,6 @@ def test_selenium(worker):
     options.add_argument('--window-size=640,480')
 
     worker.status = "Opening web browser"
-
     try: 
         driver = webdriver.Chrome(service=Service(webdriver_executable), options=options)
         driver.get(extr["links"]["google"])
@@ -69,7 +67,6 @@ def test_selenium(worker):
 #------------------------------| MAKE BOTS
 def make_bots(worker):
     worker.status = "Configuring selenium"
-
     options = ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
@@ -77,18 +74,20 @@ def make_bots(worker):
     #options.add_argument('--proxy-server=%s' %proxy)
     options.add_argument('--window-size=640,480')
 
+    driver = webdriver.Chrome(service=Service(webdriver_executable), options=options)
+
     try: 
+        worker.status = "Opening ProtonMail sign up page"
+        driver.get(extr["links"]["protonmail"]["signup"])
+
         worker.status = "Opening GuerrillaMail"
+        driver.execute_script("window.open('{}', 'secondtab');".format(extr["links"]["guerrillamail"]))
 
-        driver = webdriver.Chrome(service=Service(webdriver_executable), options=options)
-        driver.get(extr["links"]["guerrillamail"])
+        worker.status = "Creating fake email"  
+        temp_email_username = ''.join(random.choice(string.ascii_lowercase) for i in range(8))
 
-        worker.status = "Opening ProtonMail Sign Up"
-        driver.execute_script("window.open('{}', 'secondtab');".format(extr["links"]["protonmail"]["signup"]))
+        time.sleep(100)
 
-        
-
-        time.sleep(5)
     except: 
         worker.status = failure
 
