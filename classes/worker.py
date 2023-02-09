@@ -37,9 +37,11 @@ def test_threading(worker):
         worker.status = test_status[random.randint(0, 2)]
         time.sleep(random.randint(0, 2))
     
-#------------------------------| SELENIUM/TESTING
+
+#------------------------------| TEST/SELENIUM
 def test_selenium(worker): 
     worker.status = "Configuring selenium"
+
     options = ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
@@ -47,8 +49,31 @@ def test_selenium(worker):
     #options.add_argument('--proxy-server=%s' %proxy)
     options.add_argument('--window-size=640,480')
 
+    worker.status = "Opening web browser"
+
     try: 
         driver = webdriver.Chrome(service=Service(webdriver_executable), options=options)
         driver.get("https://www.google.com/webhp?hl=en&ictx=2&sa=X&ved=0ahUKEwjt7qadq4b9AhXCgoQIHWhVA5EQPQgK")
     except: 
-        worker.status = "BROKEN"     
+        worker.status = "BROKEN" 
+        time.sleep(3)
+
+
+#------------------------------| MAKE BOTS
+def make_bots(worker):
+    worker.status = "Configuring selenium"
+
+    options = ChromeOptions()
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    #options.headless = True
+    #options.add_argument('--proxy-server=%s' %proxy)
+    options.add_argument('--window-size=640,480')
+
+    worker.status = "Creating random variables"
+
+    username = "username"
+    password = "password"
+
+    
+

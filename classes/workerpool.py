@@ -10,7 +10,7 @@ from termcolor import colored
 import random 
 
 from classes.worker import TheiaWorker
-from classes.worker import test_threading, test_selenium
+from classes.worker import test_threading, test_selenium, make_bots
 
 class workerpool: 
     def __init__(self, id, task, mw): 
@@ -24,6 +24,9 @@ class workerpool:
             case "2": # TESTING SELENIUM 
                 self.task = "Test\Selenium"
                 self.executor.map(test_selenium, self.workers)
+            case "3": 
+                self.task = "Making\Bots"
+                self.executor.map(make_bots, self.workers)
                 
     def __str__(self): 
         return(f"[WorkerPool {self.id} - {self.task}]")
