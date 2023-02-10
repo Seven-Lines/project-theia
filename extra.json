@@ -18,6 +18,7 @@
         "protonmail": { 
             "signup": "https://account.proton.me/signup?plan=free&billing=12&ref=prctbl&minimumCycle=12&currency=USD&product=mail&language=en",
             "inbox": "null"
-        }
+        }, 
+        "random_wiki": "https://en.wikipedia.org/wiki/Special:Random"
     }
 }

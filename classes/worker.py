@@ -9,6 +9,7 @@ from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from guerrillamail import GuerrillaMailSession
 
 webdriver_executable = '~/Documents/GitHub/project-theia/WebDrivers/chromedriver.exe'
 extr = json.load(open('extra.json'))
@@ -20,16 +21,15 @@ class TheiaWorker:
         self.status = status 
     
     def __str__(self): 
-        return((f"  ↳ Worker {self.id_num}").ljust(30, ".") + 
-            (f"{self.status}").rjust(29, ".") + " ")
+        return((f"  ↳ Worker {self.id_num}") + (f"{self.status}").rjust(48, ".") + " ")
     
 
 """ -----| THEIA WORKER BEHAVIOR 
 These are the functions that the workers 
 actually inact. Idk, I'm fat and retarded bro.
 """
-success = "\033[92mSUCCESS\033[0m"
-failure = "\033[91mFAILURE\033[0m"
+success = "! SUCCESS !"
+failure = "! FAILURE !"
 #------------------------------| TEST/THREADING  
 def test_threading(worker):
     test_status = [ 
@@ -77,17 +77,45 @@ def make_bots(worker):
     driver = webdriver.Chrome(service=Service(webdriver_executable), options=options)
 
     try: 
-        worker.status = "Opening ProtonMail sign up page"
+        #---> NAME 
+        worker.status = "Generating random name"
+        first_names, last_names = json.load(open('./data/word_lists/first_names.json')), json.load(open('./data/word_lists/last_names.json')) 
+        name = f"{first_names[random.randint(1, 999)]} {last_names[random.randint(1, 999)]}"
+        
+        #---> USERNAME
+        worker.status = "Generating random username"
+        match random.randint(1, 3): 
+            case 1: 
+                print("noun")
+            case 2: 
+                print("adjective+noun")
+            case 3: 
+                print("wiki")
+                driver.get(extr["links"]["random_wiki"])
+
+        user = "username"
+
+        #---> PASSWORD 
+        worker.status = "Generating random password"
+        pas = "password"
+
+        #---> EMAIL
+        worker.status = "Generating random email"
+
+        driver.get()
+        temp = driver.find_element(By.CLASS_NAME, "firstHeading").text
+        print(temp)
+
+        print(name)
+        time.sleep(5)
+
         driver.get(extr["links"]["protonmail"]["signup"])
 
-        worker.status = "Opening GuerrillaMail"
-        driver.execute_script("window.open('{}', 'secondtab');".format(extr["links"]["guerrillamail"]))
+        guerrilla_mail_session = GuerrillaMailSession()
+        temp_email = guerrilla_mail_session.get_session_state()['email_address']
 
-        worker.status = "Creating fake email"  
-        temp_email_username = ''.join(random.choice(string.ascii_lowercase) for i in range(8))
-
-        time.sleep(100)
+        email = "email"
 
     except: 
         worker.status = failure
-
+ 
