@@ -2,9 +2,10 @@
 #------------------------------| IMPORTS / CONFIGURATIONS
 import json, time, sys, os, random, string, platform 
 from termcolor import colored  
+
 from classes.workerpool import workerpool
 
-extr = json.load(open('extra.json'))
+extr = json.load(open('./data/extra.json'))
 
 #------------------------------| VARIABLES
 active_workerpools = []

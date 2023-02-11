@@ -11,8 +11,11 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from guerrillamail import GuerrillaMailSession
 
-webdriver_executable = '~/Documents/GitHub/project-theia/WebDrivers/chromedriver.exe'
-extr = json.load(open('extra.json'))
+from util.username_generator import ru_name, ru_noun
+from util.password_generator import rp_rand
+
+webdriver_executable = '~/Documents/GitHub/project-theia/chromedriver.exe'
+extr = json.load(open('./data/extra.json'))
 
 class TheiaWorker: 
     def __init__(self, threadpool, id_num, status):
@@ -84,21 +87,16 @@ def make_bots(worker):
         
         #---> USERNAME
         worker.status = "Generating random username"
-        match random.randint(1, 3): 
-            case 1: 
-                print("noun")
-            case 2: 
-                print("adjective+noun")
-            case 3: 
-                print("wiki")
-                driver.get(extr["links"]["random_wiki"])
 
-        user = "username"
+        match random.randint(1, 2): 
+            case 1: user = ru_name(name) 
+            case 2: user = ru_noun(name)
 
         #---> PASSWORD 
         worker.status = "Generating random password"
-        pas = "password"
+        pas = rp_rand()
 
+        print(f"{user};{pas}")
         #---> EMAIL
         worker.status = "Generating random email"
 
