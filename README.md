@@ -10,4 +10,5 @@ Bots are just a collection of names, usernames, passwords, IP addresses, etc. st
 | 'Name' | 'Username' | 'Password' | 'Email' | 'VPN' | 
 | --- | --- | --- | --- | --- | 
 | Formated "first last", created from a wordlist of 1000+ first and last names. | Can be created using a random noun OR a combination of the first and last name. See ``./util/password_generation`` or ``./util/username_generation``. | A collection of 8 random characters or numbers. Subject to change, but should theoretically work fine. | The email address used to create/manage the bot. Handled on [ProtonMail](https://proton.me/mail). | This is the VPN connection associated with the account. Designed such that YT doesn't instantly flag the fucking thing for connecting to a bunch of random connections. |
+
 *\*All of this is subject to change depending on what YouTube/TikTok flag.*
