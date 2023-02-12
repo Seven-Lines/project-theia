@@ -10,7 +10,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as EC 
 from guerrillamail import GuerrillaMailSession
 
 from util.username_generator import ru_name, ru_noun
@@ -95,29 +95,44 @@ def make_bots(worker):
         #---> PASSWORD 
         pas = rp_rand()
 
-        #---> EMAIL
+        #---> EMAIL (& RECOVERY EMAIL)
         worker.status = "Creating GuerrillaMail session"
+        email_handle = ru_name(name)
         gm_session = GuerrillaMailSession()
-        temp_email = gm_session.get_session_state()['email_address']
+        gm_session.set_email_address(email_handle)
         
-        #print(gm_session.get_email_list()[0])
-        #print(gm_session.get_email(1).body)
+        worker.status = "Waiting for ProtonMail to respond"
+        driver.get(extr["links"]["protonmail"]["signup"])
         
         worker.status = "Inputing credentials to ProtonMail"
-        driver.get(extr["links"]["protonmail"]["signup"])
-
         wait = WebDriverWait(driver, 5)
         wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="password"]'))).send_keys(pas)
         wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="repeat-password"]'))).send_keys(pas)
         driver.switch_to.frame(driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/div[1]/div/main/div[2]/form/iframe'))
         driver.find_element(By.XPATH, '/html/body/div[1]/div/div[1]/div/div[1]/input').send_keys(usr)
+        driver.switch_to.default_content()
+        driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/div[1]/div/main/div[2]/form/button').click()
+        
+        worker.status = "Sending verification to fake email"
+        wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[1]/nav/ul/li[2]/button'))).click()
+        wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[2]/div[2]/div[1]/div/div/input'))).send_keys(f"{email_handle}@sharklasers.com")
+        driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[2]/button').click()
 
-        #driver.switch_to().frame(0)
-        #driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/div[1]/div/main/div[2]/form/button').click()
+        worker.status = "Waiting to receieve fake email"
+        while True:
+            latest_email = gm_session.get_email_list()[0]
+            if(latest_email.subject == "Proton Verification Code"): 
+                print(latest_email.subject)
+                print(latest_email.body)
+                break
+            else: 
+                print(latest_email.subject)
+                time.sleep(0.5)
 
-        time.sleep(5)
+        #print(gm_session.get_email_list()[0])
+        #print(gm_session.get_email(1).body)
 
-        email = "email"
+        email = f"{email_handle}@protonmail.com" #.. not complete btw 
     except: 
         worker.status = failure
  
