@@ -118,19 +118,24 @@ def make_bots(worker):
         wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[2]/div[2]/div[1]/div/div/input'))).send_keys(f"{email_handle}@sharklasers.com")
         driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[2]/button').click()
 
-        worker.status = "Waiting to receieve fake email"
+        worker.status = "Waiting to receieve verification code"
+        verification_code = "000000"
         while True:
             latest_email = gm_session.get_email_list()[0]
             if(latest_email.subject == "Proton Verification Code"): 
-                print(latest_email.subject)
-                print(latest_email.body)
+                verification_code = latest_email.excerpt.split()[5]
                 break
             else: 
-                print(latest_email.subject)
                 time.sleep(0.5)
 
-        #print(gm_session.get_email_list()[0])
-        #print(gm_session.get_email(1).body)
+        worker.status = f"Using verification code {verification_code}"
+        wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="verification"]'))).send_keys(verification_code)
+        wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/button[1]'))).click()        
+
+        worker.status = "Finishing creating account"
+        
+
+        time.sleep(20)
 
         email = f"{email_handle}@protonmail.com" #.. not complete btw 
     except: 
