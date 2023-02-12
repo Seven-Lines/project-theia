@@ -58,7 +58,7 @@ def create_workerpool():
             str(str(input(" >> "))),
             int(input(" >>(How many): "))
         )) 
-        menu(True, extr["message"]["created_workerpool"])
+        process_manager()
     except: 
         menu(True, extr["message"]["didnt_create_workerpool"])    
 

@@ -9,6 +9,8 @@ from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from guerrillamail import GuerrillaMailSession
 
 from util.username_generator import ru_name, ru_noun
@@ -75,45 +77,47 @@ def make_bots(worker):
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     #options.headless = True
     #options.add_argument('--proxy-server=%s' %proxy)
-    options.add_argument('--window-size=640,480')
+    options.add_argument('--window-size=800,1000')
 
     driver = webdriver.Chrome(service=Service(webdriver_executable), options=options)
 
     try: 
-        #---> NAME 
-        worker.status = "Generating random name"
+        worker.status = "Generating random credentials"
+        #---> NAME
         first_names, last_names = json.load(open('./data/word_lists/first_names.json')), json.load(open('./data/word_lists/last_names.json')) 
         name = f"{first_names[random.randint(1, 999)]} {last_names[random.randint(1, 999)]}"
         
         #---> USERNAME
-        worker.status = "Generating random username"
-
         match random.randint(1, 2): 
-            case 1: user = ru_name(name) 
-            case 2: user = ru_noun(name)
+            case 1: usr = ru_name(name) 
+            case 2: usr = ru_noun(name)
 
         #---> PASSWORD 
-        worker.status = "Generating random password"
         pas = rp_rand()
 
-        print(f"{user};{pas}")
         #---> EMAIL
-        worker.status = "Generating random email"
-
-        driver.get()
-        temp = driver.find_element(By.CLASS_NAME, "firstHeading").text
-        print(temp)
-
-        print(name)
-        time.sleep(5)
-
+        worker.status = "Creating GuerrillaMail session"
+        gm_session = GuerrillaMailSession()
+        temp_email = gm_session.get_session_state()['email_address']
+        
+        #print(gm_session.get_email_list()[0])
+        #print(gm_session.get_email(1).body)
+        
+        worker.status = "Inputing credentials to ProtonMail"
         driver.get(extr["links"]["protonmail"]["signup"])
 
-        guerrilla_mail_session = GuerrillaMailSession()
-        temp_email = guerrilla_mail_session.get_session_state()['email_address']
+        wait = WebDriverWait(driver, 5)
+        wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="password"]'))).send_keys(pas)
+        wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="repeat-password"]'))).send_keys(pas)
+        driver.switch_to.frame(driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/div[1]/div/main/div[2]/form/iframe'))
+        driver.find_element(By.XPATH, '/html/body/div[1]/div/div[1]/div/div[1]/input').send_keys(usr)
+
+        #driver.switch_to().frame(0)
+        #driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/div[1]/div/main/div[2]/form/button').click()
+
+        time.sleep(5)
 
         email = "email"
-
     except: 
         worker.status = failure
  
