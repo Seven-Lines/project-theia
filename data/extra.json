@@ -20,5 +20,17 @@
             "inbox": "null"
         }, 
         "random_wiki": "https://en.wikipedia.org/wiki/Special:Random"
+    }, 
+    "xpaths": { 
+        "proton": { 
+            "password": "//*[@id=\"password\"]", 
+            "repeat_password": "//*[@id=\"repeat-password\"]", 
+            "username_iframe": "/html/body/div[1]/div[3]/div[1]/div/main/div[2]/form/iframe", 
+            "username": "/html/body/div[1]/div/div[1]/div/div[1]/input", 
+            "create_account_button": "/html/body/div[1]/div[3]/div[1]/div/main/div[2]/form/button",
+            "email_tab": "/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[1]/nav/ul/li[2]/button",
+            "email": "/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[2]/div[2]/div[1]/div/div/input", 
+            "verification_code_button": "/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[2]/button"
+        }
     }
 }

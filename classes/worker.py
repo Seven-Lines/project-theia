@@ -106,17 +106,17 @@ def make_bots(worker):
         
         worker.status = "Inputing credentials to ProtonMail"
         wait = WebDriverWait(driver, 5)
-        wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="password"]'))).send_keys(pas)
-        wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="repeat-password"]'))).send_keys(pas)
-        driver.switch_to.frame(driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/div[1]/div/main/div[2]/form/iframe'))
-        driver.find_element(By.XPATH, '/html/body/div[1]/div/div[1]/div/div[1]/input').send_keys(usr)
+        wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["password"]))).send_keys(pas)
+        wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["repeat_password"]))).send_keys(pas)
+        driver.switch_to.frame(driver.find_element(By.XPATH, extr["xpaths"]["proton"]["username_iframe"]))
+        driver.find_element(By.XPATH, extr["xpaths"]["proton"]["username"]).send_keys(usr)
         driver.switch_to.default_content()
-        driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/div[1]/div/main/div[2]/form/button').click()
+        driver.find_element(By.XPATH, extr["xpaths"]["proton"]["create_account_button"]).click()
         
         worker.status = "Sending verification to fake email"
-        wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[1]/nav/ul/li[2]/button'))).click()
-        wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[2]/div[2]/div[1]/div/div/input'))).send_keys(f"{email_handle}@sharklasers.com")
-        driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[2]/button').click()
+        wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["email_tab"]))).click()
+        wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["email"]))).send_keys(f"{email_handle}@sharklasers.com")
+        driver.find_element(By.XPATH, extr["xpaths"]["proton"]["verification_code_button"]).click()
 
         worker.status = "Waiting to receieve verification code"
         verification_code = "000000"
