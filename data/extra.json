@@ -30,7 +30,9 @@
             "create_account_button": "/html/body/div[1]/div[3]/div[1]/div/main/div[2]/form/button",
             "email_tab": "/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[1]/nav/ul/li[2]/button",
             "email": "/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[2]/div[2]/div[1]/div/div/input", 
-            "verification_code_button": "/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[2]/button"
+            "verification_code_button": "/html/body/div[1]/div[3]/div/div/main/div[2]/div/div[2]/button", 
+            "verification_code": "//*[@id=\"verification\"", 
+            "verification_button": "/html/body/div[1]/div[3]/div/div/main/div[2]/button[1]"
         }
     }
 }

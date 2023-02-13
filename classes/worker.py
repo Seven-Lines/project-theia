@@ -134,20 +134,16 @@ def make_bots(worker):
                 time.sleep(3)
 
         worker.status = f"Using verification code {verification_code}"
-        wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="verification"]'))).send_keys(verification_code)
-        wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/button[1]'))).click()        
+        wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["verification_code"]))).send_keys(verification_code)
+        wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["verification_button"]))).click()        
 
         worker.status = "Finishing creating account"
         #wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/form/button'))).click()        
         #wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/form/button[1]'))).click() 
-        #wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="modal-597-description"]/footer/button'))).click()
-        #wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="modal-597-description"]/footer/button[2]'))).click()
-        #wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="modal-597-description"]/footer/button[2]'))).click()
 
         while True: 
             time.sleep(2)
 
-        email = f"{email_handle}@protonmail.com" #.. not complete btw 
+        #email = f"{email_handle}@protonmail.com" #.. not complete btw 
     except: 
         worker.status = failure
- 
