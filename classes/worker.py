@@ -116,11 +116,13 @@ def make_bots(worker):
         worker.status = "Sending verification to fake email"
         wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["email_tab"]))).click()
         
-        domain = random.choice(["sharklasers.com", "guerrillamail.info", "grr.la", "guerrillamail.biz", "guerrillamail.com", 
+        def get_random_domain(): 
+            return(random.choice(["sharklasers.com", "guerrillamail.info", "grr.la", "guerrillamail.biz", "guerrillamail.com", 
                                 "guerrillamail.de", "guerrillamail.net", "guerrillamail.org", "guerrillamailblock.com", 
-                                "pokemail.net", "spam4.me"])
+                                "pokemail.net", "spam4.me"]))
                 
-        wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["email"]))).send_keys(f"{email_handle}@{domain}")
+        wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["email"]))).send_keys(f"{email_handle}@{get_random_domain()}")
+        # error check at this point, if domain doesn't work call domain function again.  
         driver.find_element(By.XPATH, extr["xpaths"]["proton"]["verification_code_button"]).click()
 
         worker.status = "Waiting to receieve verification code"
