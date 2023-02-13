@@ -115,7 +115,12 @@ def make_bots(worker):
         
         worker.status = "Sending verification to fake email"
         wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["email_tab"]))).click()
-        wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["email"]))).send_keys(f"{email_handle}@sharklasers.com")
+        
+        domain = random.choice(["sharklasers.com", "guerrillamail.info", "grr.la", "guerrillamail.biz", "guerrillamail.com", 
+                                "guerrillamail.de", "guerrillamail.net", "guerrillamail.org", "guerrillamailblock.com", 
+                                "pokemail.net", "spam4.me"])
+                
+        wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["email"]))).send_keys(f"{email_handle}@{domain}")
         driver.find_element(By.XPATH, extr["xpaths"]["proton"]["verification_code_button"]).click()
 
         worker.status = "Waiting to receieve verification code"
@@ -133,7 +138,7 @@ def make_bots(worker):
         wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/button[1]'))).click()        
 
         worker.status = "Finishing creating account"
-        wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/form/button'))).click()        
+        #wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/form/button'))).click()        
         #wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div/div/main/div[2]/form/button[1]'))).click() 
         #wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="modal-597-description"]/footer/button'))).click()
         #wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="modal-597-description"]/footer/button[2]'))).click()
