@@ -115,13 +115,25 @@ def make_bots(worker):
     worker.status = "Sending verification to fake email"
     wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["email_tab"]))).click()
     
-    def get_random_domain(): 
-        return(random.choice(["sharklasers.com", "guerrillamail.info", "grr.la", "guerrillamail.biz", "guerrillamail.com", 
+    email_domains = ["sharklasers.com", "guerrillamail.info", "grr.la", "guerrillamail.biz", "guerrillamail.com", 
                             "guerrillamail.de", "guerrillamail.net", "guerrillamail.org", "guerrillamailblock.com", 
-                            "pokemail.net", "spam4.me"]))
-            
-    wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["email"]))).send_keys(f"{email_handle}@{get_random_domain()}")
-    # error check at this point, if domain doesn't work call domain function again.  
+                            "pokemail.net", "spam4.me"]
+
+    if driver.find_element(By.XPATH, '//*[@id="key_1"]/div[2]/label/span').text != "Email Address":
+        worker.status = "FAILED - IP Compromised"
+        return
+    
+    def try_domain(attempt):
+        try:
+            wait.until(EC.element_to_be_clickable((By.XPATH, extr["xpaths"]["proton"]["email"]))).send_keys(f"{email_handle}@{email_domains[attempt]}")
+            if ___: 
+                raise Exception("Doman didn't work")
+        except:
+            worker.status = "Domain failed - trying again" 
+            attempt += 1 
+            try_domain(attempt)
+    try_domain(0)
+
     driver.find_element(By.XPATH, extr["xpaths"]["proton"]["verification_code_button"]).click()
 
     worker.status = "Waiting to receieve verification code"
